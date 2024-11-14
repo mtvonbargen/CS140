@@ -1,0 +1,29 @@
+######## Data Segment ##########
+.data
+        num1:  .word   10, 20, 30
+        num2:  .space  12
+        tmp:   .word   100
+######## Code Segment ##########
+.text
+.global main
+main:
+      # num2[2] = tmp + num1[2]
+      # [step 1] num1[2]
+      la      $t0, num1                           #
+      lw      $t2, 8($t0)                         # offset 8 aka 3 array spaces
+      # [step 2] load the tmp value to $t3
+      lw      $t3, tmp                            #
+      add     $t4, $t2, $t3                       #
+      # [step 3] store $t4 to num2[2]
+      la      $t1, num2                           #
+      sw      $t4, 0($t1)                         #
+
+      li $v0, 10 # Exit program
+      syscall
+
+####
+#       $t0: address of num1 array
+#       $t1: address of num2 array
+#       $t2: to hold value num1[2]  
+#       $t3: tmp
+#       $t4: 
